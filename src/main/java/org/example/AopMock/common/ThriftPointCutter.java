@@ -3,10 +3,10 @@ package org.example.AopMock.common;
 import org.apache.thrift.TBase;
 import org.example.AopMock.common.unit.ThriftUnit;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ThriftPointCutter {
@@ -21,14 +21,15 @@ public class ThriftPointCutter {
         }
     }
 
-    private SrcReqRecordContext srcReqRecordContext;
+    private SrcReqRecordContext srcReqRecordContext = new SrcReqRecordContext();
 
-    public ThriftPointCutter(SrcReqRecordContext srcReqRecordContext) {
-        this.srcReqRecordContext = srcReqRecordContext;
-    }
+
+//    public ThriftPointCutter(SrcReqRecordContext srcReqRecordContext) {
+//        this.srcReqRecordContext = srcReqRecordContext;
+//    }
 
     //获取录制thrift请求结果
-    public TBase findResult(String signature, TBase methodArg) {
+    public Object findResult(String signature, Object[] methodArg) {
         if (null == signature) {
             return null;
         }
@@ -41,8 +42,39 @@ public class ThriftPointCutter {
                 return thriftUnit.getResult();
             }
         }
-        return null;
+
+        //根据signature + method 计算，随机获取返回对象
+        List<ThriftUnit> thriftUnitList = new ArrayList<>(thriftUnits);
+        int index = getUnitIndex(thriftUnitList,Arrays.toString(methodArg));
+        return thriftUnitList.get(index).getResult();
     }
+
+
+
+
+    private int getUnitIndex(List<ThriftUnit> thriftUnitList, String s) {
+        int index = 0;
+
+        //转MD5
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(s.getBytes());
+            byte[] digest = md.digest();
+            BigInteger bi = new BigInteger(1,digest);
+
+            //转10进制
+            BigInteger dec = new BigInteger(bi.toString(10));
+
+            //除以集合大小取余数
+            index = dec.mod(BigInteger.valueOf(thriftUnitList.size())).intValue();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return index;
+    }
+
+
 
     public boolean isNoNeedAop(Class<?> thriftIface) {
         for (String s : ifaceSet) {

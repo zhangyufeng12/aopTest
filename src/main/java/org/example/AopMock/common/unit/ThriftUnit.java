@@ -12,8 +12,8 @@ public class ThriftUnit extends ReqRecordUnit{
 
 
     private String signature;
-    private TBase arg;
-    private TBase result;
+    private Object arg;
+    private Object result;
     @Override
     public RecordInterfaceType type() {
         return RecordInterfaceType.thrift;

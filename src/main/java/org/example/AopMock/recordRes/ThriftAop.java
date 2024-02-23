@@ -19,13 +19,13 @@ public class ThriftAop {
     private static ReqRecordLogger reqRecordLogger = new ReqRecordLogger();
 
     //发送请求处做切面
-    @Pointcut("execution(void org.apache.thrift.TServiceClient.sendBase(java.lang.String, org.apache.thrift.TBase)")
+    @Pointcut("execution(void org.apache.thrift.TServiceClient.sendBase(java.lang.String, org.apache.thrift.TBase))")
     public void sendBasePointCut() {
 
     }
 
     //返回结果做切面
-    @Pointcut("execution(void org.apache.thrift.TServiceClient.receiveBase(org.apache.thrift.TBase, java.lang.String )")
+    @Pointcut("execution(void org.apache.thrift.TServiceClient.receiveBase(org.apache.thrift.TBase, java.lang.String ))")
     public void receiveBasePointCut() {
 
     }

@@ -17,6 +17,7 @@ import static org.example.AopMock.common.ReqRecordsFileUtil.typeLogFileNameMap;
 
 public class ReqRecordLoad {
     private static List<ThriftUnit> finalThriftUnits = new ArrayList<>();
+
     public List<ThriftUnit> getFinalThriftUnits(){
         return finalThriftUnits;
     }
