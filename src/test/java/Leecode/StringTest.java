@@ -48,6 +48,11 @@ public class StringTest {
         return sb.toString();
     }
 
+    /**
+     * 找到有效的括号
+     * @param s
+     * @return
+     */
     private static String ValidParentheses(String s){
         Stack<Integer> stack = new Stack<>();
         StringBuffer sb = new StringBuffer(s);
