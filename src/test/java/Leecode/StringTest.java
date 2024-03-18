@@ -6,12 +6,15 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class StringTest {
 
     public static void main(String[] args) {
         System.out.println(getMaxValue("aaabvvv"));
+
+        System.out.println(ValidParentheses("((("));
     }
 
 
@@ -43,5 +46,29 @@ public class StringTest {
             }
         }
         return sb.toString();
+    }
+
+    private static String ValidParentheses(String s){
+        Stack<Integer> stack = new Stack<>();
+        StringBuffer sb = new StringBuffer(s);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '('){
+                //将开括号的索引压入栈
+                stack.push(i);
+            }else if (c==')' && !stack.isEmpty()){
+                //找到有效对
+                stack.pop(); //弹出与之匹配的开括号
+            }else if (c==')'){
+                // 无效闭括号
+                sb.setCharAt(i, '*');
+            }else {
+                sb.setCharAt(i, '*');
+            }
+        }
+        while (!stack.isEmpty()){
+            sb.setCharAt(stack.pop(),'*');
+        }
+        return sb.toString().replaceAll("\\*","");
     }
 }

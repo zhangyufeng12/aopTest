@@ -2,10 +2,11 @@ package org.example.AopMock.common.unit;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-//@SuperBuilder
+@SuperBuilder
 public class ThriftUnit extends ReqRecordUnit{
 
 

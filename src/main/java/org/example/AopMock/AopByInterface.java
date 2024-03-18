@@ -100,11 +100,12 @@ public class AopByInterface {
                 }
             }
             if (methodArg != null) {
-
-                ThriftUnit unit = new ThriftUnit();
-                unit.setArg(Arrays.toString(methodArg));
-                unit.setSignature(signature);
-                unit.setResult(resultDate);
+                //构建日志对象
+                ThriftUnit unit = ThriftUnit.builder()
+                        .signature(signature)
+                        .arg(Arrays.toString(methodArg))
+                        .result(resultDate)
+                        .build();
                 //上报日志
                 ReqRecordLogger.logUnit(unit);
             }
