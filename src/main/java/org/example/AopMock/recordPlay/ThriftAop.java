@@ -65,10 +65,10 @@ public class ThriftAop {
             String signature = interfaceName + "." + method;
 
             //获取请求参数
-            TBase methodArg = THREAD_LOCAL.get();
+            Object[] methodArg = new TBase[]{THREAD_LOCAL.get()};
             if (methodArg!=null){
                 //根据方法签名和请求参数查找匹配结果
-                TBase res = thriftPointCutter().findResult(signature,methodArg);
+                Object res = thriftPointCutter().findResult(signature,methodArg);
                 //如果存在匹配结果
                 if (res != null){
                     args[0] = res;
